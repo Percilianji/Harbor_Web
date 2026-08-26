@@ -1,0 +1,281 @@
+from datetime import datetime
+from uuid import uuid4
+
+
+def now_label() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def make_record(payload: dict) -> dict:
+    return {"id": str(uuid4()), "createdAt": now_label(), **payload}
+
+
+stories = [
+    {
+        "title": "I wrote it down first",
+        "excerpt": "Keeping a private draft helped me find the words before I was ready to speak.",
+        "readTime": "4 min read",
+        "language": "English",
+        "region": "West Africa",
+        "tags": ["Writing", "Support"],
+        "warnings": ["Assault"],
+        "reactions": 18,
+    },
+    {
+        "title": "Someone believed me",
+        "excerpt": "One calm conversation with a counselor helped me understand that freezing was not my fault.",
+        "readTime": "3 min read",
+        "language": "English",
+        "region": "North America",
+        "tags": ["Counseling", "Healing"],
+        "warnings": ["Trauma"],
+        "reactions": 27,
+    },
+]
+
+resources = [
+    {
+        "name": "National Sexual Assault Hotline",
+        "type": "Crisis support",
+        "place": "United States",
+        "hours": "24/7",
+        "languages": "English, Spanish",
+        "cost": "Free",
+        "contact": "rainn.org or 800-656-HOPE",
+        "verified": "2026",
+    },
+    {
+        "name": "Lagos State Domestic and Sexual Violence Agency",
+        "type": "Government support",
+        "place": "Lagos, Nigeria",
+        "hours": "Business hours",
+        "languages": "English, Yoruba",
+        "cost": "Free",
+        "contact": "dsva.lagosstate.gov.ng",
+        "verified": "2026",
+    },
+]
+
+awareness_lessons = [
+    {
+        "title": "Body boundaries",
+        "contentType": "Notes",
+        "thumbnailKey": "boundaries",
+        "imageCaption": "Learning body boundaries",
+        "thumbnailAlt": "People at a public march holding signs about bodily choice and personal rights",
+        "age": "Children 6-9",
+        "topic": "Personal safety",
+        "summary": "A gentle child-friendly lesson that teaches what body boundaries are, how to say no, and when to ask a safe adult for help.",
+        "points": ["My body belongs to me.", "Safe adults listen when I say no.", "Unsafe secrets should be shared."],
+        "details": {
+            "intro": "Body boundaries are the rules a person has about their own body, personal space, touch, and privacy. Children should hear this in clear, calm language.",
+            "explanation": ["A boundary can be physical, like not wanting a hug.", "A safe adult does not punish a child for saying no to unwanted touch.", "Children should know they can keep asking for help until someone listens."],
+            "examples": [
+                {"situation": "Someone wants a hug and the child does not want one.", "response": "The child can say, 'No thank you,' wave instead, or stand beside a trusted adult."},
+                {"situation": "Someone touches a private body part or asks to see one.", "response": "The child should move away if possible and tell a trusted adult as soon as they can."},
+                {"situation": "An adult says, 'Do not tell anyone about this touch.'", "response": "That is an unsafe secret. The child should tell a trusted adult."},
+            ],
+            "practice": ["Practice saying: 'No, I do not want that.'", "Name three trusted adults the child can go to.", "Choose a safe signal the child can use when they need help leaving a situation."],
+            "check": ["Can a child say no to a hug from someone they know?", "Should unsafe secrets about touch be kept?", "Who are two trusted adults this child can talk to?"],
+        },
+    },
+    {
+        "title": "Safe and unsafe secrets",
+        "contentType": "Notes",
+        "thumbnailKey": "secrets",
+        "imageCaption": "Safe adults and trusted help",
+        "thumbnailAlt": "Advocacy artwork encouraging people to break silence and speak to trusted support",
+        "age": "Children 6-9",
+        "topic": "Trusted adults",
+        "summary": "A simple guide that helps children tell the difference between fun surprises and unsafe secrets that should be shared.",
+        "points": ["Surprises can be told later.", "Unsafe secrets feel heavy or scary.", "It is okay to ask for help more than once."],
+        "details": {
+            "intro": "This lesson helps children understand that some surprises are harmless, but secrets that create fear, shame, confusion, or pressure should be shared with a trusted adult.",
+            "explanation": ["A safe surprise usually makes people happy and is revealed soon.", "An unsafe secret feels heavy, scary, embarrassing, or confusing.", "A child is not in trouble for telling a trusted adult about an unsafe secret."],
+            "examples": [
+                {"situation": "A sibling says, 'Do not tell Mom about her birthday card.'", "response": "That is a surprise. It will be revealed soon and does not make anyone unsafe."},
+                {"situation": "Someone says, 'If you tell, people will be angry with you.'", "response": "That is pressure. The child should tell a trusted adult."},
+                {"situation": "A child tells one adult and the adult does not listen.", "response": "The child should tell another trusted adult. Asking again is allowed."},
+            ],
+            "practice": ["Sort examples into 'safe surprise' and 'unsafe secret.'", "Practice saying: 'I need to tell you something, even if someone told me not to.'", "Write or say the names of three safe adults."],
+            "check": ["What makes a surprise different from an unsafe secret?", "Is it okay to tell an unsafe secret?", "What should a child do if the first adult does not help?"],
+        },
+    },
+    {
+        "title": "Consent in friendships",
+        "contentType": "Notes",
+        "thumbnailKey": "consent",
+        "imageCaption": "Consent in everyday choices",
+        "thumbnailAlt": "A consent awareness poster about respect, clothing, and personal choice",
+        "age": "Preteens 10-12",
+        "topic": "Consent",
+        "summary": "A practical preteen lesson about asking first, respecting no, changing your mind, and treating friends' boundaries seriously.",
+        "points": ["Ask before touching or sharing photos.", "No one owes access to their body or space.", "A real friend respects a no."],
+        "details": {
+            "intro": "Consent is not only about dating or sex. Preteens can learn consent through everyday friendship moments: hugs, photos, teasing, borrowing things, sitting close, games, and online sharing.",
+            "explanation": ["Consent means someone freely agrees without pressure, fear, guilt, or embarrassment.", "A person can change their mind, even if they said yes before.", "Being friends with someone does not mean you can touch them, tease them, or post about them without asking."],
+            "examples": [
+                {"situation": "A friend says no to being in a group photo.", "response": "Respect it. Take the photo without them or ask what they are comfortable with."},
+                {"situation": "A joke makes someone uncomfortable.", "response": "Stop, apologize briefly, and do not repeat it."},
+                {"situation": "A friend agreed to a game yesterday but does not want to play today.", "response": "Accept the new answer. Consent can change."},
+            ],
+            "practice": ["Practice asking: 'Are you okay with this?'", "Practice responding to no: 'Okay, thanks for telling me.'", "Think of one online action that needs permission before doing it."],
+            "check": ["Can someone change their mind after saying yes?", "Does silence always mean yes?", "What is one respectful response when a friend says no?"],
+        },
+    },
+    {
+        "title": "#knowB4Unude",
+        "contentType": "Video",
+        "videoId": "iNAVcRO22S0",
+        "imageCaption": "Digital safety basics",
+        "thumbnailAlt": "Video thumbnail for #knowB4Unude",
+        "mediaLabel": "Play video",
+        "mediaUrl": "https://www.youtube.com/watch?v=iNAVcRO22S0",
+        "age": "Preteens 10-12",
+        "topic": "Digital safety",
+        "summary": "A youth-focused video about image sharing, consent, pressure, and getting help before an online situation becomes unsafe.",
+        "points": ["Do not send private images.", "Block and report pressure or threats.", "Tell a trusted adult before deleting evidence."],
+    },
+    {
+        "title": "ASK. LISTEN. RESPECT.",
+        "contentType": "Video",
+        "videoId": "n6X5I7xoxEY",
+        "imageCaption": "Consent without pressure",
+        "thumbnailAlt": "Video thumbnail for ASK. LISTEN. RESPECT.",
+        "mediaLabel": "Play video",
+        "mediaUrl": "https://www.youtube.com/watch?v=n6X5I7xoxEY",
+        "age": "Teens 13-17",
+        "topic": "Consent",
+        "summary": "A clear consent lesson for teens: ask first, listen to the answer, and respect boundaries without pressure.",
+        "points": ["Consent must be freely given.", "Silence is not consent.", "Pressure, guilt, or threats are warning signs."],
+    },
+    {
+        "title": "It's Giving Red Flags",
+        "contentType": "Video",
+        "videoId": "ETt8BnLbWwg",
+        "imageCaption": "Healthy relationship signs",
+        "thumbnailAlt": "Video thumbnail for It's Giving Red Flags",
+        "mediaLabel": "Play video",
+        "mediaUrl": "https://www.youtube.com/watch?v=ETt8BnLbWwg",
+        "age": "Teens 13-17",
+        "topic": "Healthy relationships",
+        "summary": "A teen-centered video about spotting control, pressure, isolation, and other warning signs in relationships.",
+        "points": ["Control is not care.", "You can keep friends and privacy.", "Ask for help if leaving feels unsafe."],
+    },
+    {
+        "title": "Dating After Sexual Assault",
+        "contentType": "Video",
+        "videoId": "rIxB8vlmAjY",
+        "imageCaption": "Dating after harm",
+        "thumbnailAlt": "Video thumbnail for Dating After Sexual Assault",
+        "mediaLabel": "Play video",
+        "mediaUrl": "https://www.youtube.com/watch?v=rIxB8vlmAjY",
+        "age": "Young adults 18+",
+        "topic": "Getting help",
+        "summary": "A supportive video about moving at your own pace, setting boundaries, and seeking help while dating after harm.",
+        "points": ["You get to choose your pace.", "Boundaries can change.", "Support can make hard conversations safer."],
+    },
+    {
+        "title": "AboutCONSENT",
+        "contentType": "Podcast/Audio",
+        "thumbnailUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/a1/c4/22/a1c42262-2978-61da-5336-a74245d5e360/mza_14304228428910261741.jpg/600x600bb.jpg",
+        "imageCaption": "Podcast audio",
+        "thumbnailAlt": "AboutCONSENT podcast cover artwork",
+        "mediaLabel": "Listen to podcast",
+        "mediaUrl": "https://podcasts.apple.com/us/podcast/aboutconsent/id1474315911",
+        "age": "Young adults 18+",
+        "topic": "Consent",
+        "summary": "Podcast conversations about consent, sexual violence prevention, survivor support, and safer community responses.",
+        "points": ["Consent is active communication.", "Culture shapes safety.", "Support should be survivor-centered."],
+    },
+    {
+        "title": "Strength To Care",
+        "contentType": "Video",
+        "videoId": "Atn-Q380_S4",
+        "imageCaption": "Community action",
+        "thumbnailAlt": "Video thumbnail for Strength To Care",
+        "mediaLabel": "Play video",
+        "mediaUrl": "https://www.youtube.com/watch?v=Atn-Q380_S4",
+        "age": "Young adults 18+",
+        "topic": "Community safety",
+        "summary": "A RAINN public service video about caring for survivors and responding with belief, calm, and practical support.",
+        "points": ["Choose the safest intervention.", "Get help from others.", "Support the person afterward without pressure."],
+    },
+    {
+        "title": "Culture of Consent",
+        "contentType": "Podcast/Audio",
+        "thumbnailUrl": "https://i.scdn.co/image/ab6765630000ba8aa1bf153f4655d048359278e4",
+        "imageCaption": "Podcast audio",
+        "thumbnailAlt": "Culture of Consent podcast cover artwork",
+        "mediaLabel": "Listen to podcast",
+        "mediaUrl": "https://open.spotify.com/show/0CB75JXKisp8ilamE1YBnJ",
+        "age": "Parents & guardians",
+        "topic": "Trusted adults",
+        "summary": "A podcast for educators and caring adults about building a culture of consent, boundaries, and sexual assault prevention.",
+        "points": ["Use correct names for body parts.", "Avoid fear-based teaching.", "Thank children when they tell you something hard."],
+    },
+    {
+        "title": "Sex, Power, and Consent",
+        "contentType": "Podcast/Audio",
+        "thumbnailUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts126/v4/f3/9b/de/f39bde5e-0a87-f52b-2ac1-f0a1f5add643/mza_1879752631854681806.png/600x600bb.jpg",
+        "imageCaption": "Podcast audio",
+        "thumbnailAlt": "#NoExcuse podcast cover artwork",
+        "mediaLabel": "Listen to podcast",
+        "mediaUrl": "https://www.who.int/podcasts/series/noexcuse/episode-23---sex--power-and-consent--decoding-sexual-misconduct",
+        "age": "Educators",
+        "topic": "Prevention education",
+        "summary": "A WHO No Excuse podcast episode for understanding power, consent, misconduct, and prevention education.",
+        "points": ["Keep examples age-appropriate.", "Name reporting channels clearly.", "Do not ask students to disclose publicly."],
+    },
+    {
+        "title": "Both/And",
+        "contentType": "Podcast/Audio",
+        "thumbnailUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/41/90/b7/4190b7c3-cf8f-652f-9816-7b6ff7ab76c0/mza_13255878296208075778.jpg/600x600bb.jpg",
+        "imageCaption": "Podcast audio",
+        "thumbnailAlt": "Both/And podcast cover artwork",
+        "mediaLabel": "Listen to podcast",
+        "mediaUrl": "https://podcasts.apple.com/us/podcast/both-and-a-sexual-violence-prevention-podcast/id1622831700",
+        "age": "Educators",
+        "topic": "Prevention education",
+        "summary": "A sexual violence prevention podcast for deeper conversations about education, accountability, and culture change.",
+        "points": ["Prevention is ongoing work.", "Communities need clear norms.", "Learning should lead to safer action."],
+    },
+]
+
+healing_tools = [
+    {
+        "title": "Inhale and exhale",
+        "type": "breathing",
+        "body": "Use this when your body feels tense, shaky, panicked, numb, or too full. Breathe with the circle for a few rounds, then stop whenever you want.",
+        "steps": ["Sit or stand in a position that feels steady.", "Click Start and follow the words in the circle.", "Let your shoulders drop a little when you exhale.", "Stop if the rhythm does not feel helpful."],
+    },
+    {
+        "title": "5-4-3-2-1 grounding",
+        "type": "checklist",
+        "body": "Use this when memories, worry, or fear pull you away from the present moment. It gently brings attention back to the room you are in.",
+        "steps": ["Name five things you can see.", "Name four things you can feel.", "Name three things you can hear.", "Name two things you can smell.", "Name one kind thing about yourself."],
+    },
+    {
+        "title": "Release body tension",
+        "type": "checklist",
+        "body": "Use this when your jaw, hands, shoulders, or stomach feel tight. The aim is not to force calm, but to tell your body it can soften a little.",
+        "steps": ["Press your feet into the floor for three seconds, then release.", "Squeeze your hands gently, then open them.", "Lift your shoulders toward your ears, then let them drop.", "Unclench your jaw and rest your tongue.", "Take one slow breath before moving on."],
+    },
+    {
+        "title": "Safe-place visualization",
+        "type": "reflection",
+        "body": "Use this when you need a mental place to pause. Choose a real or imagined place that feels calm, private, and safe enough for this moment.",
+        "steps": ["Picture the place in your mind.", "Notice the colors, sounds, temperature, and textures.", "Imagine one thing there that helps you feel protected.", "Write a short sentence you can repeat when you need to return to it."],
+    },
+    {
+        "title": "Before disclosure",
+        "type": "reflection",
+        "body": "Use this before telling someone something hard. It helps you decide what support you want before the conversation starts.",
+        "steps": ["Choose who feels safest to talk to.", "Decide what you want: listening, help, privacy, company, or practical action.", "Write one sentence you can start with.", "Plan what you will do afterward to feel steady."],
+    },
+]
+
+story_drafts: list[dict] = []
+journal_entries: list[dict] = []
+vault_cases: list[dict] = []
+users_by_name: dict[str, dict] = {}
