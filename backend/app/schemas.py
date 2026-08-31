@@ -105,6 +105,17 @@ class OfficialAccountUpdate(BaseModel):
     role: str = "government"
 
 
+class SupportResourceRequest(BaseModel):
+    name: str
+    type: str
+    place: str
+    hours: str = ""
+    languages: str = ""
+    cost: str = ""
+    contact: str
+    verified: str = "Admin added"
+
+
 class PasswordSetupRequest(BaseModel):
     token: str
     password: str

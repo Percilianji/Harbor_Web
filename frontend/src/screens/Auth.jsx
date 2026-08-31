@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SectionHeading from "../components/SectionHeading.jsx";
 import { apiRequest } from "../utils/api.js";
-import { storageKeys, writeStored } from "../utils/storage.js";
+import { storageKeys, writeSession } from "../utils/storage.js";
 
 const emptySignup = {
   privateName: "",
@@ -15,7 +15,7 @@ const emptyLogin = {
   password: "",
 };
 
-export default function Auth({ notify, onAuthenticated }) {
+export default function Auth({ notify, onAuthenticated, reason }) {
   const [mode, setMode] = useState("signup");
   const [signup, setSignup] = useState(emptySignup);
   const [login, setLogin] = useState(emptyLogin);
@@ -46,7 +46,7 @@ export default function Auth({ notify, onAuthenticated }) {
     apiRequest("/api/auth/signup", { method: "POST", body: JSON.stringify(signup) })
       .then((data) => {
         setCurrentUser(data.user);
-        writeStored(storageKeys.currentUser, data.user);
+        writeSession(storageKeys.currentUser, data.user);
         setSignup(emptySignup);
         onAuthenticated?.(data.user);
         showStatus("success", data.message);
@@ -62,7 +62,7 @@ export default function Auth({ notify, onAuthenticated }) {
     apiRequest("/api/auth/login", { method: "POST", body: JSON.stringify(login) })
       .then((data) => {
         setCurrentUser(data.user);
-        writeStored(storageKeys.currentUser, data.user);
+        writeSession(storageKeys.currentUser, data.user);
         setLogin(emptyLogin);
         onAuthenticated?.(data.user);
         showStatus("success", data.message);
@@ -77,18 +77,18 @@ export default function Auth({ notify, onAuthenticated }) {
   return (
     <section id="auth" className="app-section auth-section" aria-labelledby="auth-title">
       <SectionHeading eyebrow="Private access" title="Use a private name, not your legal name.">
-        Create a private account so drafts, journal entries, and vault records can stay connected to you when you return.
+        {reason || "Create a private account only when you want to save private drafts, journal entries, or vault records."}
       </SectionHeading>
 
       <div className="auth-layout">
         <aside className="auth-info" aria-label="Private account details">
           <h3>What this means</h3>
-          <p>Community users can create a private account. Government accounts are created by a Harbor admin before login.</p>
+          <p>You can read resources without an account. We ask you to sign in only before saving private information, so it does not mix with someone else's visit on this device.</p>
           <ul className="lesson-points">
             <li>No legal name required.</li>
-            <li>Use a strong password.</li>
-            <li>Government officials log in with the account created for them.</li>
-            <li>Super admins log in with the configured admin email and password.</li>
+            <li>Your private name connects your saved drafts to this browser tab.</li>
+            <li>Closing the tab signs you out.</li>
+            <li>Government and admin accounts use the login button with their official credentials.</li>
           </ul>
           {currentUser && (
             <div className="auth-success">

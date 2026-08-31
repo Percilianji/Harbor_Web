@@ -24,3 +24,20 @@ export function writeStored(key, value) {
 export function removeStored(key) {
   localStorage.removeItem(key);
 }
+
+export function readSession(key, fallback) {
+  try {
+    const raw = sessionStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+export function writeSession(key, value) {
+  sessionStorage.setItem(key, JSON.stringify(value));
+}
+
+export function removeSession(key) {
+  sessionStorage.removeItem(key);
+}

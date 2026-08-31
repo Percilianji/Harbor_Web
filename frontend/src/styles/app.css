@@ -353,6 +353,7 @@ textarea { resize: vertical; min-height: 120px; }
 .invite-link-box { display: grid; gap: 0.45rem; margin-top: 1rem; padding: 0.9rem; border: 1px dashed var(--primary); border-radius: 12px; background: var(--lavender-soft); }
 .invite-link-box strong { color: var(--primary-strong); }
 .invite-link-box span { color: var(--muted); font-size: 0.92rem; }
+.admin-subsection-title { margin-top: 2rem; }
 .official-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1rem; }
 .official-actions .button,
 .official-actions .delete-story-button { min-height: 38px; margin-top: 0; padding: 0.45rem 0.7rem; }

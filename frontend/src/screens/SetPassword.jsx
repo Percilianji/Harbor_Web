@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import SectionHeading from "../components/SectionHeading.jsx";
 import { apiRequest } from "../utils/api.js";
-import { storageKeys, writeStored } from "../utils/storage.js";
+import { storageKeys, writeSession } from "../utils/storage.js";
 
 export default function SetPassword({ notify, onAuthenticated }) {
   const token = useMemo(() => {
@@ -19,7 +19,7 @@ export default function SetPassword({ notify, onAuthenticated }) {
       body: JSON.stringify({ token, ...form }),
     })
       .then((data) => {
-        writeStored(storageKeys.currentUser, data.user);
+        writeSession(storageKeys.currentUser, data.user);
         notify(data.message);
         onAuthenticated?.(data.user);
       })

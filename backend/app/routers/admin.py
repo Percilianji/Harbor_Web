@@ -6,8 +6,8 @@ from secrets import token_hex, token_urlsafe
 from fastapi import APIRouter, Header, HTTPException
 
 from app.mailer import send_official_invite
-from app.schemas import OfficialAccountRequest, OfficialAccountUpdate
-from app.store import government_profiles, invite_tokens, make_record, users_by_name
+from app.schemas import OfficialAccountRequest, OfficialAccountUpdate, SupportResourceRequest
+from app.store import government_profiles, invite_tokens, make_record, resources, users_by_name
 
 router = APIRouter()
 
@@ -184,3 +184,78 @@ def delete_official(
             users_by_name.pop(key, None)
 
     return {"message": "Official account deleted.", "deleted": True}
+
+
+@router.get("/support-resources")
+def list_support_resources(
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+    return {"resources": resources}
+
+
+@router.post("/support-resources")
+def create_support_resource(
+    payload: SupportResourceRequest,
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+    if len(payload.name.strip()) < 2:
+        raise HTTPException(status_code=400, detail="Support contact name is required.")
+    if not payload.contact.strip():
+        raise HTTPException(status_code=400, detail="Contact details are required.")
+
+    record = make_record({
+        "name": payload.name.strip(),
+        "type": payload.type.strip() or "Support contact",
+        "place": payload.place.strip() or "Cameroon",
+        "hours": payload.hours.strip() or "Verify before visiting",
+        "languages": payload.languages.strip() or "Ask contact",
+        "cost": payload.cost.strip() or "Verify before using",
+        "contact": payload.contact.strip(),
+        "verified": payload.verified.strip() or "Admin added",
+    })
+    resources.insert(0, record)
+    return {"message": "Support contact added.", "resource": record}
+
+
+@router.put("/support-resources/{resource_id}")
+def update_support_resource(
+    resource_id: str,
+    payload: SupportResourceRequest,
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+    resource = next((item for item in resources if item.get("id") == resource_id), None)
+    if not resource:
+        raise HTTPException(status_code=404, detail="Support contact was not found.")
+
+    resource.update({
+        "name": payload.name.strip(),
+        "type": payload.type.strip() or "Support contact",
+        "place": payload.place.strip() or "Cameroon",
+        "hours": payload.hours.strip() or "Verify before visiting",
+        "languages": payload.languages.strip() or "Ask contact",
+        "cost": payload.cost.strip() or "Verify before using",
+        "contact": payload.contact.strip(),
+        "verified": payload.verified.strip() or "Admin added",
+    })
+    return {"message": "Support contact updated.", "resource": resource}
+
+
+@router.delete("/support-resources/{resource_id}")
+def delete_support_resource(
+    resource_id: str,
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+    resource = next((item for item in resources if item.get("id") == resource_id), None)
+    if not resource:
+        raise HTTPException(status_code=404, detail="Support contact was not found.")
+
+    resources.remove(resource)
+    return {"message": "Support contact deleted.", "deleted": True}
