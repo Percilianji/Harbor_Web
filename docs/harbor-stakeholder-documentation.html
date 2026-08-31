@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Harbor Stakeholder Documentation</title>
+  <style>
+    @page { margin: 0.75in; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f5f1ea;
+      color: #201b24;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12pt;
+      line-height: 1.55;
+    }
+    .document {
+      width: min(980px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: 56px;
+      background: #fff;
+      box-shadow: 0 18px 50px rgba(32, 27, 36, 0.12);
+    }
+    h1, h2, h3, h4 { color: #3d2f4f; line-height: 1.16; }
+    h1 { margin: 0 0 10px; font-size: 34pt; }
+    h2 { margin: 38px 0 12px; font-size: 22pt; border-bottom: 1px solid #d9d0e4; padding-bottom: 6px; }
+    h3 { margin: 24px 0 8px; font-size: 16pt; }
+    h4 { margin: 18px 0 6px; font-size: 13pt; }
+    p { margin: 0 0 12px; }
+    ul, ol { margin-top: 6px; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; }
+    th, td { border: 1px solid #d9d0e4; padding: 9px; vertical-align: top; }
+    th { background: #f0ebf5; color: #3d2f4f; text-align: left; }
+    .meta { color: #5f5867; font-size: 11pt; }
+    .tagline {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border-left: 6px solid #b11218;
+      background: #fff4f4;
+      font-size: 18pt;
+      font-weight: bold;
+      color: #7c1016;
+    }
+    .callout {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border: 1px solid #d9d0e4;
+      border-left: 6px solid #3d2f4f;
+      background: #fbf9fd;
+    }
+    .pain {
+      border-left-color: #b11218;
+      background: #fff7f2;
+    }
+    .screenshot {
+      margin: 18px 0 26px;
+      page-break-inside: avoid;
+    }
+    .screenshot img {
+      width: 100%;
+      border: 1px solid #d9d0e4;
+      border-radius: 8px;
+      display: block;
+    }
+    .caption {
+      margin-top: 8px;
+      color: #5f5867;
+      font-size: 10.5pt;
+      font-style: italic;
+    }
+    .toc {
+      columns: 2;
+      column-gap: 32px;
+      padding-left: 18px;
+    }
+    .status {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #e9f4ec;
+      color: #1f5f38;
+      font-weight: bold;
+    }
+    .page-break { page-break-before: always; }
+    @media print {
+      body { background: #fff; }
+      .document { width: 100%; margin: 0; padding: 0; box-shadow: none; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="document">
+    <header>
+      <p class="meta">Stakeholder Documentation | Harbor Survivor Support and Violence Prevention Platform</p>
+      <h1>Harbor</h1>
+      <p><strong>A private, survivor-centered digital platform for reporting support, awareness, healing, and government-informed response to gender-based violence.</strong></p>
+      <div class="tagline">End the silence. Stop the violence. Protect every life.</div>
+      <p class="meta">Prepared for stakeholders, government partners, civil society actors, education partners, survivor advocates, and implementation teams.</p>
+    </header>
+
+    <section>
+      <h2>Table of Contents</h2>
+      <ol class="toc">
+        <li>Executive Summary</li>
+        <li>The Pain Point Harbor Responds To</li>
+        <li>Purpose and Strategic Value</li>
+        <li>Why the Name “Harbor” Works</li>
+        <li>Target Population</li>
+        <li>System Overview</li>
+        <li>Core Functionalities</li>
+        <li>Actors, Roles, and Permissions</li>
+        <li>Action Flows</li>
+        <li>Government and Official Use</li>
+        <li>Privacy, Safety, and Ethics</li>
+        <li>Feature Importance</li>
+        <li>Future Development</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>1. Executive Summary</h2>
+      <p>Harbor is a trauma-informed web platform designed to support survivors and communities affected by domestic violence, sexual abuse, emotional abuse, femicide risk, harassment, coercion, and other forms of gender-based violence. The system combines private survivor tools, public education, emergency support information, anonymous storytelling, official awareness campaigns, and restricted government dashboards.</p>
+      <p>The platform is especially designed for the African context, with a strong focus on Cameroon. It includes Cameroon emergency contacts such as MINPROFF 116, Police 117, and Gendarmerie 118, a “Break the Silence Cameroon” campaign page, bilingual English/French interface direction, and role-based access control for government officials and administrators.</p>
+      <p>Harbor is not simply a reporting tool. It is a protected entry point for people who may not yet be ready to report formally, but who need to write, understand, preserve, learn, seek help, or find a path toward support. It gives survivors control while giving approved institutions a safer way to understand trends and respond to needs.</p>
+
+      <div class="screenshot">
+        <img src="screenshots/home.png" alt="Harbor home screen showing survivor-centered introduction and primary actions" />
+        <p class="caption">Figure 1: Harbor home screen, introducing the platform as a private survivor-centered space.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. The Pain Point Harbor Responds To</h2>
+      <div class="callout pain">
+        <p><strong>Violence often thrives where silence is forced.</strong> Survivors may be afraid to speak because they fear shame, family pressure, disbelief, retaliation, social exposure, police intimidation, financial dependence, or being blamed for what happened to them.</p>
+      </div>
+      <p>In many communities, survivors of domestic violence, rape, sexual harassment, child abuse, online blackmail, emotional torture, and coercive control do not immediately approach police, hospitals, ministries, or legal services. This delay is not because the harm is small. It is often because the survivor is trying to survive the next hour, the next night, or the next confrontation.</p>
+      <p>Common pain points include:</p>
+      <ul>
+        <li><strong>Fear of exposure:</strong> survivors may not want their name, story, photos, location, or accused person details to become public.</li>
+        <li><strong>Stigma and victim blaming:</strong> survivors may be asked what they wore, why they stayed, why they delayed, or why they trusted the offender.</li>
+        <li><strong>Confusion about where to go:</strong> many people do not know whether to call a ministry line, police, gendarmerie, hospital, counselor, lawyer, school authority, or community leader.</li>
+        <li><strong>Loss of evidence:</strong> messages, screenshots, dates, witnesses, and details can disappear or become harder to remember over time.</li>
+        <li><strong>Lack of age-appropriate education:</strong> children and young people often do not receive clear, simple teaching about body boundaries, unsafe secrets, consent, and online pressure.</li>
+        <li><strong>Weak feedback loops for government:</strong> authorities may not see where support needs are rising because many cases remain hidden.</li>
+      </ul>
+      <p>Harbor responds to these pain points by creating a calm, private, educational, and structured place where users can take small steps without being forced into public disclosure.</p>
+    </section>
+
+    <section>
+      <h2>3. Purpose and Strategic Value</h2>
+      <p>The purpose of Harbor is to reduce silence around violence while protecting the dignity, privacy, and agency of survivors. It gives people tools to document, learn, seek support, and participate in prevention campaigns at their own pace.</p>
+      <h3>Strategic Objectives</h3>
+      <ul>
+        <li>Provide a private digital space for survivors to write, save, and reflect safely.</li>
+        <li>Connect people to local support resources and emergency contacts.</li>
+        <li>Educate children, teens, young adults, parents, teachers, and community members about prevention.</li>
+        <li>Allow anonymous story sharing without public comments or harmful debate.</li>
+        <li>Enable approved government users to understand anonymous trends and review only survivor-consented vault records.</li>
+        <li>Support national campaigns against domestic violence, sexual abuse, emotional abuse, and femicide.</li>
+      </ul>
+      <p>For government and institutional stakeholders, Harbor can become a privacy-preserving signal system. It can show what types of help people are seeking, which regions need more outreach, which educational materials are being used, and which emergency contacts people are opening. This helps authorities plan without exposing survivors.</p>
+    </section>
+
+    <section>
+      <h2>4. Why “Harbor” Is the Perfect Name</h2>
+      <p>The name <strong>Harbor</strong> communicates safety without sounding clinical, legalistic, or intimidating. A harbor is a place where people come in from danger, storms, fear, and uncertainty. It does not force them to explain everything immediately. It offers shelter, direction, and time.</p>
+      <p>This is exactly what the platform aims to be: a place where survivors can pause, gather their thoughts, protect their story, and decide what next step feels safe. The name is gentle enough for survivors, credible enough for institutions, and broad enough to grow into education, campaigns, reporting support, policy insight, and community prevention.</p>
+      <p>Harbor also avoids language that could frighten users away. A survivor may not be ready to click a button called “Report rape” or “Police case,” but they may be ready to enter a space called Harbor.</p>
+    </section>
+
+    <section>
+      <h2>5. Target Population</h2>
+      <p>Harbor is designed for a wide but carefully defined population:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Population</th>
+            <th>Need</th>
+            <th>How Harbor Supports Them</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Survivors of domestic violence, sexual abuse, harassment, and emotional abuse</td>
+            <td>Privacy, safety, documentation, support, and control</td>
+            <td>Private journal, evidence vault, anonymous story sharing, support directory, emergency contacts</td>
+          </tr>
+          <tr>
+            <td>Children and teens</td>
+            <td>Simple education about boundaries, unsafe secrets, consent, and online pressure</td>
+            <td>Age-appropriate awareness lessons, videos, and practical learning points</td>
+          </tr>
+          <tr>
+            <td>Parents, guardians, teachers, and caregivers</td>
+            <td>Guidance on prevention and how to respond calmly</td>
+            <td>Awareness hub, educational books/articles, podcasts, and caregiver-focused lessons</td>
+          </tr>
+          <tr>
+            <td>Community members and bystanders</td>
+            <td>Understanding how to help without causing more harm</td>
+            <td>Campaign pledges, support messages, prevention content, and emergency contacts</td>
+          </tr>
+          <tr>
+            <td>Government officials and approved partners</td>
+            <td>Safe trend insight, campaign management, and consent-based case review</td>
+            <td>Government dashboard, official vault review, awareness content management, flyer management</td>
+          </tr>
+          <tr>
+            <td>Super administrators</td>
+            <td>Controlled user governance and official account creation</td>
+            <td>Admin panel for adding, viewing, editing, deleting government officials</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>6. System Overview</h2>
+      <p>Harbor is organized around a small number of high-value spaces:</p>
+      <ul>
+        <li><strong>Home:</strong> introduces Harbor and directs users to stories, support, and the campaign.</li>
+        <li><strong>Stories:</strong> a moderated story library where survivors can read and share without public identity.</li>
+        <li><strong>Awareness:</strong> educational notes, videos, podcasts, audio, articles, and books.</li>
+        <li><strong>Healing:</strong> grounding and reflection exercises.</li>
+        <li><strong>Support:</strong> Cameroon-first emergency contacts and support directory.</li>
+        <li><strong>Journal:</strong> private reflection area for community users.</li>
+        <li><strong>Vault:</strong> private evidence records for community users; official review dashboard for approved government users.</li>
+        <li><strong>Campaign:</strong> public campaign page for “Break the Silence Cameroon.”</li>
+        <li><strong>Government Impact:</strong> restricted trend dashboard for approved government users.</li>
+        <li><strong>Admin Panel:</strong> super admin control for official account management.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Core Functionalities</h2>
+
+      <h3>7.1 Break the Silence Cameroon Campaign</h3>
+      <p>The campaign page localizes Harbor for Cameroon. It includes a Cameroon domestic violence flyer, emergency contacts, campaign messages, and a share button. It helps turn the platform from a private tool into a national awareness and prevention instrument.</p>
+      <p>The campaign page matters because public education is essential. Survivors are not the only people who need to change behavior. Families, men, schools, communities, local authorities, faith groups, and institutions must also understand that violence is a crime and that love does not hurt.</p>
+      <div class="screenshot">
+        <img src="screenshots/campaign.png" alt="Break the Silence Cameroon campaign page with flyer and campaign text" />
+        <p class="caption">Figure 2: Campaign page with Cameroon-focused message, flyer, support link, and share action.</p>
+      </div>
+
+      <h3>7.2 Support Directory and Emergency Contacts</h3>
+      <p>The Support page displays Cameroon emergency lines prominently: MINPROFF 116, National Police 117, and Gendarmerie 118. It also lists broader support resources such as government support, referral centers, counseling, legal aid, and medical support.</p>
+      <p>This is important because survivors often do not know where to begin. A simple number can be the difference between isolation and immediate help.</p>
+      <div class="screenshot">
+        <img src="screenshots/support.png" alt="Support page showing Cameroon emergency numbers and support cards" />
+        <p class="caption">Figure 3: Support page leading with Cameroon emergency contacts.</p>
+      </div>
+
+      <h3>7.3 Awareness Hub</h3>
+      <p>The Awareness Hub contains educational materials for different audiences and ages. Content can include notes, videos, podcasts, audio lessons, articles, and educational books. Each item can show a thumbnail, content type, audience, topic, summary, key points, and published date.</p>
+      <p>Government officials and approved partners can manage this content through a role-restricted form. They can create, edit, and delete awareness content, upload or link media, add thumbnails, and publish materials for everyone to view.</p>
+      <p>This feature is important because prevention requires repetition, clarity, and trusted public messaging. Schools, youth groups, families, and community organizations need simple educational materials that can be understood quickly.</p>
+      <div class="screenshot">
+        <img src="screenshots/awareness.png" alt="Awareness page with official content manager form and awareness cards" />
+        <p class="caption">Figure 4: Awareness Hub with official content management form for approved government users.</p>
+      </div>
+
+      <h3>7.4 Stories</h3>
+      <p>The Stories feature allows survivors to read shared experiences and submit their own stories privately, anonymously, or with a nickname. It avoids public comments and ranking systems because those can become harmful. Instead, it uses supportive reactions.</p>
+      <p>This is important because stories reduce isolation. A survivor who reads “someone believed me” or “I wrote it down first” may begin to understand that what happened was not their fault and that help can start with a small step.</p>
+
+      <h3>7.5 Private Journal</h3>
+      <p>The Journal gives community users a private place to write thoughts, moods, reflections, and recovery milestones. It is hidden from government users because officials do not need access to personal healing notes.</p>
+      <p>This matters because healing is not only legal or medical. Survivors often need a private place to name what they feel without pressure to report, explain, or perform strength.</p>
+
+      <h3>7.6 Evidence Vault</h3>
+      <p>The Vault helps users preserve factual details: dates, locations, people involved, witnesses, screenshots, medical notes, legal follow-up, and safety notes. It is designed for private record-keeping, not public accusations.</p>
+      <p>A clear consent checkbox allows users to choose whether an official support team may review the record. Without consent, the government view should not display the record.</p>
+      <p>This matters because many survivors remember details in fragments. The Vault helps them preserve information while they are still deciding what to do next.</p>
+      <div class="screenshot">
+        <img src="screenshots/vault-official.png" alt="Official vault review dashboard with filters and submitted vault messages" />
+        <p class="caption">Figure 5: Government view of consented vault messages with filters.</p>
+      </div>
+
+      <h3>7.7 Government Impact Dashboard</h3>
+      <p>The Government Impact view presents anonymous metrics such as support searches, emergency taps, awareness lesson activity, and priority regions. It is restricted to approved government users.</p>
+      <p>This feature is important because governments need data to act, but survivors need privacy to stay safe. Harbor balances these needs by emphasizing aggregated, non-identifying insight.</p>
+
+      <h3>7.8 Admin Panel</h3>
+      <p>The Admin Panel is restricted to super administrators. It allows the admin to create government official accounts, view details, edit official information, delete officials, and trigger invitation emails for password setup.</p>
+      <p>This matters because government access should never be self-assigned. A random person should not be able to sign up as an official. The admin-created account flow protects the integrity of the system.</p>
+      <div class="screenshot">
+        <img src="screenshots/admin-panel.png" alt="Super admin panel for adding government officials" />
+        <p class="caption">Figure 6: Admin Panel for creating and managing government official accounts.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>8. Actors, Roles, and Permissions</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Actor</th>
+            <th>Description</th>
+            <th>Allowed Actions</th>
+            <th>Why the Actor Matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Community User</td>
+            <td>A survivor, helper, caregiver, student, or ordinary user.</td>
+            <td>Sign up, log in, read stories, share stories, use journal, save vault records, search support, view awareness content, view campaign.</td>
+            <td>This is the primary population Harbor protects. Their safety and dignity shape the whole system.</td>
+          </tr>
+          <tr>
+            <td>Survivor</td>
+            <td>A community user who has experienced violence or harm.</td>
+            <td>Write privately, document evidence, decide whether to share anonymously, decide whether officials can review a vault record.</td>
+            <td>Survivors must stay in control. Harbor avoids forcing public disclosure or immediate formal reporting.</td>
+          </tr>
+          <tr>
+            <td>Government Official / Approved Partner</td>
+            <td>A verified authority or partner created by the admin.</td>
+            <td>View government dashboard, review consented vault messages, manage awareness content, upload/link educational media, update campaign flyer when permitted.</td>
+            <td>Officials connect the platform to public response, prevention, and policy action.</td>
+          </tr>
+          <tr>
+            <td>Super Admin</td>
+            <td>The trusted system administrator.</td>
+            <td>Create official accounts, send password setup invites, view/edit/delete officials, manage access, oversee governance.</td>
+            <td>The admin protects RBAC integrity and prevents unauthorized people from becoming officials.</td>
+          </tr>
+          <tr>
+            <td>Moderator</td>
+            <td>A future safety role for reviewing public content.</td>
+            <td>Review stories, check harmful content, apply content warnings, maintain community safety.</td>
+            <td>Moderation prevents the platform from becoming a place of harassment, blame, or retraumatization.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>9. Action Flows</h2>
+
+      <h3>9.1 Community User Flow</h3>
+      <ol>
+        <li>User creates a private account using a private name and password.</li>
+        <li>User lands on the home page and chooses whether to read stories, find support, open the campaign, use healing tools, journal, or save vault details.</li>
+        <li>If writing a story, the user chooses privacy level: private, anonymous, nickname, or draft.</li>
+        <li>If saving evidence, the user records facts and decides whether officials may review the record.</li>
+        <li>User can return later to continue at their own pace.</li>
+      </ol>
+
+      <h3>9.2 Official Account Flow</h3>
+      <ol>
+        <li>Super admin creates an official account from the Admin Panel.</li>
+        <li>The official receives an email with a password setup link.</li>
+        <li>The official creates a password and logs in.</li>
+        <li>The official sees government-specific tools such as Impact, official Vault review, and Awareness content management.</li>
+        <li>The official cannot access private community-only spaces such as Journal.</li>
+      </ol>
+
+      <h3>9.3 Awareness Content Flow</h3>
+      <ol>
+        <li>Government/admin opens Awareness Hub.</li>
+        <li>They add a content title, content type, audience, topic, summary, key points, published date, media link or upload, thumbnail, and extra text.</li>
+        <li>The item appears publicly as an awareness card.</li>
+        <li>Officials can later edit or delete the item.</li>
+      </ol>
+
+      <h3>9.4 Consented Vault Review Flow</h3>
+      <ol>
+        <li>Community user creates a vault record.</li>
+        <li>User checks “I want an official support team to review this record” only if they consent.</li>
+        <li>Government user opens the official Vault view.</li>
+        <li>Government user filters by region, status, type, or search terms.</li>
+        <li>Government user marks for follow-up or assigns response according to future case workflow rules.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>10. Government and Official Use</h2>
+      <p>Harbor is designed to support government action without turning survivor data into a public or unsafe database. The official view exists for planning, prevention, and response, not surveillance.</p>
+      <p>Government users are important because violence prevention requires public coordination. Ministries, police, gendarmerie, hospitals, schools, social workers, and legal support bodies all play a role. Harbor gives them structured access to the information they need while respecting survivor consent.</p>
+      <h3>Government Activities</h3>
+      <ul>
+        <li>Publish awareness materials for different audiences.</li>
+        <li>Update campaign flyers and official prevention messages.</li>
+        <li>Review only vault cases where users have explicitly consented to official review.</li>
+        <li>Observe anonymous trends to understand support needs by region and category.</li>
+        <li>Coordinate follow-up through assigned case workflows.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>11. Privacy, Safety, and Ethics</h2>
+      <p>Harbor must be trusted before it can be useful. The platform therefore follows survivor-centered principles:</p>
+      <ul>
+        <li><strong>Privacy by default:</strong> users are not required to use legal names.</li>
+        <li><strong>Consent before official review:</strong> government users should only see vault records that survivors explicitly allow.</li>
+        <li><strong>No public accused-person database:</strong> the platform does not create a public naming system.</li>
+        <li><strong>Moderated public stories:</strong> stories are designed for support, not debate or blame.</li>
+        <li><strong>Role-based access:</strong> government and admin features are not available to ordinary users.</li>
+        <li><strong>Auditability:</strong> future production versions should log sensitive admin and official actions.</li>
+      </ul>
+      <div class="callout">
+        <p><strong>Stakeholder concern:</strong> Government access can be helpful, but it must be restricted, verified, and accountable. Harbor’s design gives officials tools to act while preventing random users from becoming officials through public signup.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>12. Why the Features Matter</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Problem It Solves</th>
+            <th>Why It Is Important</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Private accounts</td>
+            <td>People fear using legal names.</td>
+            <td>Allows safer access while keeping user records connected.</td>
+          </tr>
+          <tr>
+            <td>Story sharing</td>
+            <td>Survivors feel alone and unheard.</td>
+            <td>Builds solidarity without forcing public identity.</td>
+          </tr>
+          <tr>
+            <td>Evidence vault</td>
+            <td>Details and evidence can be lost.</td>
+            <td>Helps users preserve facts for future help or reporting.</td>
+          </tr>
+          <tr>
+            <td>Official review consent</td>
+            <td>Authorities need information, but survivors need control.</td>
+            <td>Balances response with privacy and dignity.</td>
+          </tr>
+          <tr>
+            <td>Awareness Hub</td>
+            <td>Communities lack clear prevention education.</td>
+            <td>Supports schools, caregivers, youth, and public campaigns.</td>
+          </tr>
+          <tr>
+            <td>Campaign page</td>
+            <td>Violence prevention needs visible public messaging.</td>
+            <td>Creates a Cameroon-centered campaign identity and shareable materials.</td>
+          </tr>
+          <tr>
+            <td>Government dashboard</td>
+            <td>Hidden violence creates weak planning data.</td>
+            <td>Gives anonymous insight for policy, outreach, and resource allocation.</td>
+          </tr>
+          <tr>
+            <td>Admin-managed official accounts</td>
+            <td>Random users could pretend to be officials.</td>
+            <td>Protects authority access and strengthens trust.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>13. Current Implementation Status</h2>
+      <p><span class="status">Implemented in prototype</span></p>
+      <ul>
+        <li>Community sign-up and login.</li>
+        <li>Super admin login through configured admin credentials.</li>
+        <li>Admin panel for creating, viewing, editing, and deleting government officials.</li>
+        <li>Email invite flow for official password setup, with SMTP configuration support.</li>
+        <li>Government-specific navigation and restricted views.</li>
+        <li>Campaign page with Cameroon flyer and share action.</li>
+        <li>Support page with Cameroon emergency contacts.</li>
+        <li>Awareness content management by government/admin users.</li>
+        <li>Vault privacy consent checkbox and official review interface.</li>
+        <li>Database migrations for RBAC, official review, invite tokens, campaign flyers, and awareness publication fields.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>14. Future Development Recommendations</h2>
+      <ul>
+        <li>Connect all prototype in-memory routes fully to PostgreSQL for permanent storage.</li>
+        <li>Store uploaded files in secure object storage and save URLs in PostgreSQL.</li>
+        <li>Implement full translation dictionaries for English and French across all UI and database content.</li>
+        <li>Add official email verification and token expiry for invite links.</li>
+        <li>Add audit logs for every government/admin view of sensitive records.</li>
+        <li>Add moderation workflows for public story approval.</li>
+        <li>Add newsroom or recent cases page with strict verification and trauma-informed summaries.</li>
+        <li>Add analytics for campaign pledges, flyer shares, awareness content usage, and emergency contact taps.</li>
+        <li>Add admin controls for suspending officials and rotating access.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>15. Closing Statement</h2>
+      <p>Harbor gives survivors a place to begin before they are ready to speak loudly. It gives communities language to prevent harm. It gives government actors a safer way to see where help is needed. Most importantly, it treats every story as belonging first to the person who lived it.</p>
+      <div class="tagline">End the silence. Stop the violence. Protect every life.</div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,186 @@
+import hashlib
+import hmac
+import os
+from secrets import token_hex, token_urlsafe
+
+from fastapi import APIRouter, Header, HTTPException
+
+from app.mailer import send_official_invite
+from app.schemas import OfficialAccountRequest, OfficialAccountUpdate
+from app.store import government_profiles, invite_tokens, make_record, users_by_name
+
+router = APIRouter()
+
+
+def normalize_name(value: str) -> str:
+    return value.strip().lower()
+
+
+def hash_password(password: str, salt: str) -> str:
+    hashed = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), bytes.fromhex(salt), 120_000)
+    return hashed.hex()
+
+
+def require_admin(x_harbor_role: str, x_harbor_admin_email: str) -> None:
+    super_admin_email = os.getenv("SUPER_ADMIN_EMAIL", "admin@harbor.cm").strip().lower()
+    if x_harbor_role != "admin" or not hmac.compare_digest(x_harbor_admin_email.strip().lower(), super_admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required.")
+
+
+@router.get("/officials")
+def list_officials(
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+    return {"officials": government_profiles}
+
+
+@router.post("/officials")
+def create_official(
+    payload: OfficialAccountRequest,
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+
+    private_name = payload.privateName.strip()
+    official_email = payload.officialEmail.strip().lower()
+    role = payload.role.strip().lower() or "government"
+    normalized_name = normalize_name(private_name)
+    normalized_email = normalize_name(official_email)
+
+    if role not in {"government", "ngo"}:
+        raise HTTPException(status_code=400, detail="Official role must be government or ngo.")
+    if len(private_name) < 3:
+        raise HTTPException(status_code=400, detail="Official name must be at least 3 characters.")
+    if not official_email or "@" not in official_email:
+        raise HTTPException(status_code=400, detail="Official email is required.")
+    if normalized_name in users_by_name or normalized_email in users_by_name:
+        raise HTTPException(status_code=409, detail="That official account already exists.")
+
+    salt = token_hex(16)
+    invite_token = token_urlsafe(32)
+    temporary_password = token_urlsafe(24)
+    user = make_record({
+        "privateName": private_name,
+        "normalizedName": normalized_name,
+        "recoveryEmail": official_email,
+        "officialEmail": official_email,
+        "role": role,
+        "accountStatus": "invited",
+        "mustResetPassword": True,
+        "passwordSalt": salt,
+        "passwordHash": hash_password(temporary_password, salt),
+    })
+    users_by_name[normalized_name] = user
+    users_by_name[normalized_email] = user
+
+    profile = make_record({
+        "userId": user["id"],
+        "privateName": private_name,
+        "officialEmail": official_email,
+        "agencyName": payload.agencyName.strip(),
+        "positionTitle": payload.positionTitle.strip(),
+        "role": role,
+        "authorityType": "NGO partner" if role == "ngo" else "Government official",
+        "verificationStatus": "verified",
+    })
+    government_profiles.insert(0, profile)
+    invite_tokens[invite_token] = {"userId": user["id"], "officialEmail": official_email}
+    frontend_origin = os.getenv("FRONTEND_ORIGIN", "http://127.0.0.1:5173").rstrip("/")
+    setup_link = f"{frontend_origin}/#set-password?token={invite_token}"
+    email_sent = send_official_invite(official_email, private_name, setup_link)
+
+    return {
+        "message": "Official account created. Invite email sent." if email_sent else "Official account created. Email is not configured, so use the setup link shown.",
+        "official": profile,
+        "emailSent": email_sent,
+        "setupLink": "" if email_sent else setup_link,
+    }
+
+
+@router.get("/officials/{official_id}")
+def get_official(
+    official_id: str,
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+    official = next((item for item in government_profiles if item["id"] == official_id), None)
+    if not official:
+        raise HTTPException(status_code=404, detail="Official account was not found.")
+    return {"official": official}
+
+
+@router.put("/officials/{official_id}")
+def update_official(
+    official_id: str,
+    payload: OfficialAccountUpdate,
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+    official = next((item for item in government_profiles if item["id"] == official_id), None)
+    if not official:
+        raise HTTPException(status_code=404, detail="Official account was not found.")
+
+    user = next((item for item in users_by_name.values() if item.get("id") == official.get("userId")), None)
+    old_keys = {normalize_name(official.get("privateName", "")), normalize_name(official.get("officialEmail", ""))}
+    new_name = payload.privateName.strip()
+    new_email = payload.officialEmail.strip().lower()
+    new_role = payload.role.strip().lower() or "government"
+    new_keys = {normalize_name(new_name), normalize_name(new_email)}
+
+    if new_role not in {"government", "ngo"}:
+        raise HTTPException(status_code=400, detail="Official role must be government or ngo.")
+
+    for key in new_keys:
+      existing = users_by_name.get(key)
+      if existing and existing.get("id") != official.get("userId"):
+          raise HTTPException(status_code=409, detail="Another account already uses that name or email.")
+
+    official.update({
+        "privateName": new_name,
+        "officialEmail": new_email,
+        "agencyName": payload.agencyName.strip(),
+        "positionTitle": payload.positionTitle.strip(),
+        "role": new_role,
+        "authorityType": "NGO partner" if new_role == "ngo" else "Government official",
+        "verificationStatus": payload.verificationStatus.strip() or "verified",
+    })
+
+    if user:
+        for key in old_keys - new_keys:
+            users_by_name.pop(key, None)
+        user.update({
+            "privateName": new_name,
+            "normalizedName": normalize_name(new_name),
+            "recoveryEmail": new_email,
+            "officialEmail": new_email,
+            "role": new_role,
+        })
+        for key in new_keys:
+            users_by_name[key] = user
+
+    return {"message": "Official account updated.", "official": official}
+
+
+@router.delete("/officials/{official_id}")
+def delete_official(
+    official_id: str,
+    x_harbor_role: str = Header(default="community"),
+    x_harbor_admin_email: str = Header(default=""),
+):
+    require_admin(x_harbor_role, x_harbor_admin_email)
+    official = next((item for item in government_profiles if item["id"] == official_id), None)
+    if not official:
+        raise HTTPException(status_code=404, detail="Official account was not found.")
+
+    government_profiles.remove(official)
+    user = next((item for item in users_by_name.values() if item.get("id") == official.get("userId")), None)
+    if user:
+        for key in {normalize_name(user.get("privateName", "")), normalize_name(user.get("officialEmail", ""))}:
+            users_by_name.pop(key, None)
+
+    return {"message": "Official account deleted.", "deleted": True}

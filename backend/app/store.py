@@ -35,14 +35,44 @@ stories = [
 
 resources = [
     {
-        "name": "National Sexual Assault Hotline",
-        "type": "Crisis support",
-        "place": "United States",
-        "hours": "24/7",
-        "languages": "English, Spanish",
+        "name": "MINPROFF Child and Family Assistance Line",
+        "type": "Government family and survivor support",
+        "place": "Cameroon, national",
+        "hours": "Emergency line",
+        "languages": "English, French, local referral support",
         "cost": "Free",
-        "contact": "rainn.org or 800-656-HOPE",
-        "verified": "2026",
+        "contact": "116 toll free",
+        "verified": "Flyer supplied by user",
+    },
+    {
+        "name": "National Police Emergency",
+        "type": "Immediate security assistance",
+        "place": "Cameroon, national",
+        "hours": "Emergency line",
+        "languages": "English and French",
+        "cost": "Free",
+        "contact": "117 toll free",
+        "verified": "Flyer supplied by user",
+    },
+    {
+        "name": "Gendarmerie Nationale",
+        "type": "Urgent security help",
+        "place": "Cameroon, national",
+        "hours": "Emergency line",
+        "languages": "English and French",
+        "cost": "Free",
+        "contact": "118 toll free",
+        "verified": "Flyer supplied by user",
+    },
+    {
+        "name": "Cameroon One Stop Center, Yaounde",
+        "type": "Medical, psychosocial, legal, and protection referral",
+        "place": "Cameroon, Centre, Yaounde",
+        "hours": "Varies by service",
+        "languages": "English and French",
+        "cost": "Verify before visit",
+        "contact": "Ask MINPROFF 116 or local services for current access details",
+        "verified": "Needs official verification",
     },
     {
         "name": "Lagos State Domestic and Sexual Violence Agency",
@@ -58,6 +88,7 @@ resources = [
 
 awareness_lessons = [
     {
+        "id": "body-boundaries",
         "title": "Body boundaries",
         "contentType": "Notes",
         "thumbnailKey": "boundaries",
@@ -67,6 +98,7 @@ awareness_lessons = [
         "topic": "Personal safety",
         "summary": "A gentle child-friendly lesson that teaches what body boundaries are, how to say no, and when to ask a safe adult for help.",
         "points": ["My body belongs to me.", "Safe adults listen when I say no.", "Unsafe secrets should be shared."],
+        "publishedAt": "2026-08-01",
         "details": {
             "intro": "Body boundaries are the rules a person has about their own body, personal space, touch, and privacy. Children should hear this in clear, calm language.",
             "explanation": ["A boundary can be physical, like not wanting a hug.", "A safe adult does not punish a child for saying no to unwanted touch.", "Children should know they can keep asking for help until someone listens."],
@@ -80,6 +112,7 @@ awareness_lessons = [
         },
     },
     {
+        "id": "safe-unsafe-secrets",
         "title": "Safe and unsafe secrets",
         "contentType": "Notes",
         "thumbnailKey": "secrets",
@@ -89,6 +122,7 @@ awareness_lessons = [
         "topic": "Trusted adults",
         "summary": "A simple guide that helps children tell the difference between fun surprises and unsafe secrets that should be shared.",
         "points": ["Surprises can be told later.", "Unsafe secrets feel heavy or scary.", "It is okay to ask for help more than once."],
+        "publishedAt": "2026-08-02",
         "details": {
             "intro": "This lesson helps children understand that some surprises are harmless, but secrets that create fear, shame, confusion, or pressure should be shared with a trusted adult.",
             "explanation": ["A safe surprise usually makes people happy and is revealed soon.", "An unsafe secret feels heavy, scary, embarrassing, or confusing.", "A child is not in trouble for telling a trusted adult about an unsafe secret."],
@@ -102,6 +136,7 @@ awareness_lessons = [
         },
     },
     {
+        "id": "consent-friendships",
         "title": "Consent in friendships",
         "contentType": "Notes",
         "thumbnailKey": "consent",
@@ -111,6 +146,7 @@ awareness_lessons = [
         "topic": "Consent",
         "summary": "A practical preteen lesson about asking first, respecting no, changing your mind, and treating friends' boundaries seriously.",
         "points": ["Ask before touching or sharing photos.", "No one owes access to their body or space.", "A real friend respects a no."],
+        "publishedAt": "2026-08-03",
         "details": {
             "intro": "Consent is not only about dating or sex. Preteens can learn consent through everyday friendship moments: hugs, photos, teasing, borrowing things, sitting close, games, and online sharing.",
             "explanation": ["Consent means someone freely agrees without pressure, fear, guilt, or embarrassment.", "A person can change their mind, even if they said yes before.", "Being friends with someone does not mean you can touch them, tease them, or post about them without asking."],
@@ -277,5 +313,52 @@ healing_tools = [
 
 story_drafts: list[dict] = []
 journal_entries: list[dict] = []
-vault_cases: list[dict] = []
+vault_cases: list[dict] = [
+    {
+        "id": "demo-vault-1",
+        "createdAt": "2026-08-22 10:15:00",
+        "userId": "anonymous-001",
+        "userName": "Anonymous user",
+        "label": "Report from Douala",
+        "incidentDateTime": "August 2026",
+        "location": "Douala, Littoral",
+        "recordType": "Police or legal note",
+        "peopleInvolved": "Private details hidden in public summaries.",
+        "witnesses": "One neighbor heard the incident.",
+        "evidenceFileName": "",
+        "screenshotReference": "WhatsApp messages saved by survivor.",
+        "medicalLegalFollowUp": "Asked about reporting options.",
+        "safetyNotes": "Needs safe contact before follow-up.",
+        "notes": "Survivor described domestic violence and asked what help is available.",
+        "privateDetails": "Shared for official review: alleged partner details, safe calling window, and nearby trusted contact.",
+        "notesLength": 75,
+        "privateDetailsLength": 98,
+        "consentToOfficialReview": True,
+        "status": "new",
+    },
+    {
+        "id": "demo-vault-2",
+        "createdAt": "2026-08-24 15:40:00",
+        "userId": "anonymous-002",
+        "userName": "Anonymous user",
+        "label": "School harassment note",
+        "incidentDateTime": "2025",
+        "location": "Yaounde, Centre",
+        "recordType": "Witness note",
+        "peopleInvolved": "Teacher and student details kept private.",
+        "witnesses": "Classmate may confirm.",
+        "evidenceFileName": "photo-reference.jpg",
+        "screenshotReference": "",
+        "medicalLegalFollowUp": "No formal report yet.",
+        "safetyNotes": "Needs trusted adult support.",
+        "notes": "A student recorded repeated harassment and wants guidance before reporting.",
+        "privateDetails": "Shared for official review: school context, possible witness name, and safer contact through guardian.",
+        "notesLength": 71,
+        "privateDetailsLength": 95,
+        "consentToOfficialReview": True,
+        "status": "review",
+    },
+]
 users_by_name: dict[str, dict] = {}
+government_profiles: list[dict] = []
+invite_tokens: dict[str, dict] = {}

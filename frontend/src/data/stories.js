@@ -1,0 +1,32 @@
+export const stories = [
+  {
+    title: "Finding words at my own pace",
+    excerpt: "I kept this private for a long time. Writing it in small pieces helped me notice that I was still here.",
+    warnings: ["Assault", "Family"],
+    language: "English",
+    region: "Broad region only",
+    readTime: "4 min",
+    tags: ["Recovery", "Support"],
+    reactions: 42,
+  },
+  {
+    title: "The first person who listened",
+    excerpt: "I did not need advice that day. I needed someone to sit beside me and say they believed me.",
+    warnings: ["Assault"],
+    language: "English",
+    region: "Not shown",
+    readTime: "3 min",
+    tags: ["Disclosure", "Counselling"],
+    reactions: 31,
+  },
+  {
+    title: "Choosing what I keep private",
+    excerpt: "I saved details in my private record, but my public story is about getting help and staying in control.",
+    warnings: ["Workplace"],
+    language: "English",
+    region: "West Africa",
+    readTime: "5 min",
+    tags: ["Privacy", "Legal support"],
+    reactions: 27,
+  },
+];

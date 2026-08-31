@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import auth, awareness, chatbot, healing, home, journal, share_story, stories, support, vault
+from app.routers import admin, auth, awareness, chatbot, healing, home, impact, journal, share_story, stories, support, vault
 
 load_dotenv()
 
@@ -27,11 +27,13 @@ def health_check():
 
 app.include_router(home.router, prefix="/api/home", tags=["home"])
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 app.include_router(share_story.router, prefix="/api/share", tags=["share"])
 app.include_router(stories.router, prefix="/api/stories", tags=["stories"])
 app.include_router(awareness.router, prefix="/api/awareness", tags=["awareness"])
 app.include_router(chatbot.router, prefix="/api/chatbot", tags=["chatbot"])
 app.include_router(healing.router, prefix="/api/healing", tags=["healing"])
 app.include_router(support.router, prefix="/api/support", tags=["support"])
+app.include_router(impact.router, prefix="/api/impact", tags=["impact"])
 app.include_router(journal.router, prefix="/api/journal", tags=["journal"])
 app.include_router(vault.router, prefix="/api/vault", tags=["vault"])

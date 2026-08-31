@@ -1,0 +1,48 @@
+export const cameroonRegions = [
+  "Adamawa",
+  "Centre",
+  "East",
+  "Far North",
+  "Littoral",
+  "North",
+  "North-West",
+  "South",
+  "South-West",
+  "West",
+];
+
+export const emergencyContacts = [
+  {
+    name: "MINPROFF Child and Family Assistance Line",
+    type: "Government family and survivor support",
+    place: "Cameroon, national",
+    contact: "116 toll free",
+    hours: "Emergency line",
+    languages: "English, French, local referral support",
+    access: "Phone",
+    cost: "Free",
+    verified: "Flyer supplied by user",
+  },
+  {
+    name: "National Police Emergency",
+    type: "Immediate security assistance",
+    place: "Cameroon, national",
+    contact: "117 toll free",
+    hours: "Emergency line",
+    languages: "English and French",
+    access: "Phone",
+    cost: "Free",
+    verified: "Flyer supplied by user",
+  },
+  {
+    name: "Gendarmerie Nationale",
+    type: "Urgent security help",
+    place: "Cameroon, national",
+    contact: "118 toll free",
+    hours: "Emergency line",
+    languages: "English and French",
+    access: "Phone",
+    cost: "Free",
+    verified: "Flyer supplied by user",
+  },
+];

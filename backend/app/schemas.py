@@ -32,6 +32,8 @@ class JournalEntry(BaseModel):
 
 
 class VaultCase(BaseModel):
+    userId: str = ""
+    userName: str = ""
     label: str
     incidentDateTime: str = ""
     location: str = ""
@@ -43,6 +45,8 @@ class VaultCase(BaseModel):
     medicalLegalFollowUp: str = ""
     safetyNotes: str = ""
     notes: str = ""
+    privateDetails: str = ""
+    consentToOfficialReview: bool = False
 
 
 class ChatMessage(BaseModel):
@@ -52,13 +56,56 @@ class ChatMessage(BaseModel):
     history: list[dict[str, str]] = Field(default_factory=list)
 
 
+class AwarenessLessonRequest(BaseModel):
+    title: str
+    contentType: str = "Notes"
+    thumbnailKey: str = ""
+    thumbnailUrl: str = ""
+    thumbnailAlt: str = ""
+    imageCaption: str = ""
+    mediaLabel: str = ""
+    mediaUrl: str = ""
+    videoId: str = ""
+    age: str = "All ages"
+    topic: str = "Prevention education"
+    summary: str
+    points: list[str] = Field(default_factory=list)
+    publishedAt: str = ""
+    details: dict = Field(default_factory=dict)
+
+
 class SignupRequest(BaseModel):
     privateName: str
     password: str
     confirmPassword: str
     recoveryEmail: str = ""
+    accountType: str = "community"
+    governmentCode: str = ""
 
 
 class LoginRequest(BaseModel):
     privateName: str
     password: str
+
+
+class OfficialAccountRequest(BaseModel):
+    privateName: str
+    officialEmail: str
+    agencyName: str
+    positionTitle: str = ""
+    role: str = "government"
+
+
+class OfficialAccountUpdate(BaseModel):
+    privateName: str
+    officialEmail: str
+    agencyName: str
+    positionTitle: str = ""
+    verificationStatus: str = "verified"
+    role: str = "government"
+
+
+class PasswordSetupRequest(BaseModel):
+    token: str
+    password: str
+    confirmPassword: str
