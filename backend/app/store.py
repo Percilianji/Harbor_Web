@@ -41,7 +41,7 @@ resources = [
         "hours": "Emergency line",
         "languages": "English, French, local referral support",
         "cost": "Free",
-        "contact": "116 toll free",
+        "contact": "116",
         "verified": "Flyer supplied by user",
     },
     {
@@ -51,7 +51,7 @@ resources = [
         "hours": "Emergency line",
         "languages": "English and French",
         "cost": "Free",
-        "contact": "117 toll free",
+        "contact": "117",
         "verified": "Flyer supplied by user",
     },
     {
@@ -61,28 +61,8 @@ resources = [
         "hours": "Emergency line",
         "languages": "English and French",
         "cost": "Free",
-        "contact": "118 toll free",
+        "contact": "118",
         "verified": "Flyer supplied by user",
-    },
-    {
-        "name": "Cameroon One Stop Center, Yaounde",
-        "type": "Medical, psychosocial, legal, and protection referral",
-        "place": "Cameroon, Centre, Yaounde",
-        "hours": "Varies by service",
-        "languages": "English and French",
-        "cost": "Verify before visit",
-        "contact": "Ask MINPROFF 116 or local services for current access details",
-        "verified": "Needs official verification",
-    },
-    {
-        "name": "Lagos State Domestic and Sexual Violence Agency",
-        "type": "Government support",
-        "place": "Lagos, Nigeria",
-        "hours": "Business hours",
-        "languages": "English, Yoruba",
-        "cost": "Free",
-        "contact": "dsva.lagosstate.gov.ng",
-        "verified": "2026",
     },
 ]
 

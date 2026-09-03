@@ -53,12 +53,9 @@ OPENAI_API_KEY=your-openai-api-key
 OPENAI_MODEL=gpt-4o-mini
 OPENAI_ENABLE_WEB_SEARCH=true
 OPENAI_WEB_SEARCH_TOOL=web_search
-SMTP_HOST=your-smtp-host
-SMTP_PORT=587
-SMTP_USERNAME=your-smtp-username
-SMTP_PASSWORD=your-smtp-app-password
-SMTP_FROM_EMAIL=your-from-email
 ```
+
+SMTP is not required for the current official-account flow. Admins create government/NGO accounts and manually share the generated temporary password.
 
 ## 5. Start backend and database
 
@@ -81,4 +78,4 @@ http://YOUR_VPS_IP:8000/api/health
 
 ## Important
 
-The PostgreSQL database is created and initialized from `backend/database/schema.sql`, but the current FastAPI routes still use in-memory Python data. Wire the routes to `DATABASE_URL` before relying on production persistence.
+The PostgreSQL database is created and initialized from `backend/database/schema.sql`. Core routes now use `DATABASE_URL` for persistent users, official accounts, support resources, stories, journal entries, vault cases, awareness lessons, and campaign flyers.

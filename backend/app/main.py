@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import admin, auth, awareness, chatbot, healing, home, impact, journal, share_story, stories, support, vault
+from app.routers import admin, auth, awareness, campaign, chatbot, healing, home, impact, journal, share_story, stories, support, vault
 
 load_dotenv()
 
@@ -34,6 +34,7 @@ app.include_router(awareness.router, prefix="/api/awareness", tags=["awareness"]
 app.include_router(chatbot.router, prefix="/api/chatbot", tags=["chatbot"])
 app.include_router(healing.router, prefix="/api/healing", tags=["healing"])
 app.include_router(support.router, prefix="/api/support", tags=["support"])
+app.include_router(campaign.router, prefix="/api/campaign", tags=["campaign"])
 app.include_router(impact.router, prefix="/api/impact", tags=["impact"])
 app.include_router(journal.router, prefix="/api/journal", tags=["journal"])
 app.include_router(vault.router, prefix="/api/vault", tags=["vault"])

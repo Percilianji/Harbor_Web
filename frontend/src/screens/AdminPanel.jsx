@@ -30,7 +30,7 @@ export default function AdminPanel({ currentUser, notify }) {
   const [editing, setEditing] = useState(null);
   const [editingSupport, setEditingSupport] = useState(null);
   const [busy, setBusy] = useState(false);
-  const [setupLink, setSetupLink] = useState("");
+  const [createdCredential, setCreatedCredential] = useState(null);
 
   const headers = {
     "X-Harbor-Role": currentUser?.role || "community",
@@ -68,7 +68,10 @@ export default function AdminPanel({ currentUser, notify }) {
       .then((data) => {
         setOfficials((current) => [data.official, ...current]);
         setForm(blankOfficial);
-        setSetupLink(data.setupLink || "");
+        setCreatedCredential({
+          email: data.official?.officialEmail || form.officialEmail,
+          password: data.temporaryPassword || "",
+        });
         notify(data.message);
       })
       .catch((error) => notify(error.message || "Could not create official account."))
@@ -215,12 +218,13 @@ export default function AdminPanel({ currentUser, notify }) {
             <span>Position <small>optional</small></span>
             <input value={form.positionTitle} onChange={(event) => setForm({ ...form, positionTitle: event.target.value })} placeholder="Regional focal point" />
           </label>
-          <button className="button primary" type="submit" disabled={busy}>{busy ? "Creating" : "Create and email invite"}</button>
-          {setupLink && (
+          <button className="button primary" type="submit" disabled={busy}>{busy ? "Creating" : "Create account"}</button>
+          {createdCredential?.password && (
             <div className="invite-link-box">
-              <strong>Email is not configured locally.</strong>
-              <span>Use this setup link for testing:</span>
-              <input readOnly value={setupLink} onFocus={(event) => event.target.select()} />
+              <strong>Temporary login details</strong>
+              <span>Share these with the official so they can log in now.</span>
+              <input readOnly value={createdCredential.email} onFocus={(event) => event.target.select()} aria-label="Official email" />
+              <input readOnly value={createdCredential.password} onFocus={(event) => event.target.select()} aria-label="Temporary password" />
             </div>
           )}
         </form>

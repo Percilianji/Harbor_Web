@@ -1,21 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SectionHeading from "../components/SectionHeading.jsx";
 import { makeId } from "../utils/browser.js";
 import { readStored, storageKeys, writeStored } from "../utils/storage.js";
 import { apiRequest } from "../utils/api.js";
 
-export default function Journal({ notify }) {
+export default function Journal({ notify, currentUser }) {
   const [entries, setEntries] = useState(() => readStored(storageKeys.journal, []));
   const [form, setForm] = useState({ title: "", mood: "Steady", body: "", tags: "" });
+  const headers = {
+    "X-Harbor-User-Id": currentUser?.id || currentUser?.privateName || "",
+    "X-Harbor-User-Name": currentUser?.privateName || "",
+  };
+
+  useEffect(() => {
+    apiRequest("/api/journal/entries", { headers })
+      .then((data) => {
+        setEntries(data.entries || []);
+        writeStored(storageKeys.journal, data.entries || []);
+      })
+      .catch(() => undefined);
+  }, [currentUser?.id, currentUser?.privateName]);
 
   const save = (event) => {
     event.preventDefault();
-    const nextEntries = [{ id: makeId(), ...form, date: new Date().toLocaleString() }, ...entries];
+    const localEntry = { id: makeId(), ...form, date: new Date().toLocaleString() };
+    const nextEntries = [localEntry, ...entries];
     setEntries(nextEntries);
     writeStored(storageKeys.journal, nextEntries);
     setForm({ title: "", mood: "Steady", body: "", tags: "" });
-    apiRequest("/api/journal/entries", { method: "POST", body: JSON.stringify(form) })
-      .then((data) => notify(data.message))
+    apiRequest("/api/journal/entries", { method: "POST", headers, body: JSON.stringify(form) })
+      .then((data) => {
+        setEntries((current) => current.map((entry) => entry.id === localEntry.id ? data.entry : entry));
+        notify(data.message);
+      })
       .catch(() => notify("Journal entry saved privately in this browser."));
   };
 
@@ -23,7 +40,7 @@ export default function Journal({ notify }) {
     const nextEntries = entries.filter((entry) => entry.id !== id);
     setEntries(nextEntries);
     writeStored(storageKeys.journal, nextEntries);
-    apiRequest(`/api/journal/entries/${id}`, { method: "DELETE" }).catch(() => undefined);
+    apiRequest(`/api/journal/entries/${id}`, { method: "DELETE", headers }).catch(() => undefined);
     notify("Journal entry deleted.");
   };
 

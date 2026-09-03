@@ -323,6 +323,18 @@ function getThumbnailSrc(lesson) {
   return thumbnails[lesson.thumbnailKey || lesson.thumbnail_key] || imageChoice;
 }
 
+function renderEmergencyLinks(text = "") {
+  const emergencyNumberPattern = /\b(116|117|118)\b/g;
+  return text.split(emergencyNumberPattern).map((part, index) => {
+    if (!["116", "117", "118"].includes(part)) return part;
+    return (
+      <a className="inline-call-link" href={`tel:${part}`} key={`${part}-${index}`} aria-label={`Call ${part}`}>
+        {part}
+      </a>
+    );
+  });
+}
+
 export default function AwarenessHub({ notify, currentUser }) {
   const { isFrench } = useLanguage();
   const [items, setItems] = useState(lessons.map(enrichLesson));
@@ -555,9 +567,9 @@ export default function AwarenessHub({ notify, currentUser }) {
               <span className="pill">Published {lesson.publishedAt}</span>
             </div>
             <h3>{lesson.title}</h3>
-            <p>{lesson.summary}</p>
+            <p>{renderEmergencyLinks(lesson.summary)}</p>
             <ul className="lesson-points">
-              {lesson.points.map((point) => <li key={point}>{point}</li>)}
+              {lesson.points.map((point) => <li key={point}>{renderEmergencyLinks(point)}</li>)}
             </ul>
             {mediaUrl && youtubeId && (
               <button className="media-link" type="button" onClick={() => setActiveVideo(lesson)}>
@@ -608,13 +620,13 @@ export default function AwarenessHub({ notify, currentUser }) {
             <div className="lesson-modal-body">
               <section className="lesson-detail-intro">
                 <img src={getThumbnailSrc(activeNote)} alt={activeNote.thumbnailAlt || activeNote.thumbnail_alt || ""} />
-                <p>{activeNote.details?.intro || activeNote.summary}</p>
+                <p>{renderEmergencyLinks(activeNote.details?.intro || activeNote.summary)}</p>
               </section>
 
               <section className="lesson-detail-section">
                 <h4>What this means</h4>
                 <ul>
-                  {(activeNote.details?.explanation || activeNote.points).map((item) => <li key={item}>{item}</li>)}
+                  {(activeNote.details?.explanation || activeNote.points).map((item) => <li key={item}>{renderEmergencyLinks(item)}</li>)}
                 </ul>
               </section>
 

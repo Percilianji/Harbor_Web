@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from app.repositories import save_story_draft_in_db, submit_story_in_db
 from app.schemas import StoryDraft
 from app.store import make_record, stories, story_drafts
 
@@ -13,6 +14,10 @@ def get_story_steps():
 
 @router.post("/drafts")
 def save_draft(draft: StoryDraft):
+    db_record = save_story_draft_in_db(draft)
+    if db_record is not None:
+        return {"message": "Draft saved.", "draft": db_record}
+
     record = make_record(draft.model_dump())
     story_drafts.insert(0, record)
     return {"message": "Draft saved.", "draft": record}
@@ -21,6 +26,13 @@ def save_draft(draft: StoryDraft):
 @router.post("/submissions")
 def submit_story(story: StoryDraft):
     is_public_story = story.publishing in {"anonymous", "nickname"}
+    db_result = submit_story_in_db(story)
+    if db_result is not None:
+        submission, public_story = db_result
+        if public_story:
+            return {"message": "Story added to the story library.", "submission": submission, "story": public_story}
+        return {"message": "Private story saved. It will not appear in the public story library.", "submission": submission}
+
     record = make_record({**story.model_dump(), "status": "published" if is_public_story else "private"})
     story_drafts.insert(0, record)
 

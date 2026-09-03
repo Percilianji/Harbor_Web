@@ -5,6 +5,7 @@ from secrets import token_hex
 
 from fastapi import APIRouter, HTTPException
 
+from app.repositories import create_community_user_in_db, get_user_for_login_from_db, public_user_from_db_row
 from app.schemas import LoginRequest, PasswordSetupRequest, SignupRequest
 from app.store import invite_tokens, make_record, users_by_name
 
@@ -42,9 +43,23 @@ def signup(payload: SignupRequest):
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters.")
     if payload.password != payload.confirmPassword:
         raise HTTPException(status_code=400, detail="Passwords do not match.")
+    salt = token_hex(16)
+    db_user = None
+    try:
+        db_user = create_community_user_in_db({
+            "private_name": private_name,
+            "normalized_name": normalized,
+            "recovery_email": payload.recoveryEmail.strip(),
+            "password_salt": salt,
+            "password_hash": hash_password(payload.password, salt),
+        })
+    except ValueError as error:
+        raise HTTPException(status_code=409, detail=str(error)) from error
+    if db_user is not None:
+        return {"message": "Private account created.", "user": db_user}
+
     if normalized in users_by_name:
         raise HTTPException(status_code=409, detail="That private name is already taken.")
-    salt = token_hex(16)
     user = make_record({
         "privateName": private_name,
         "normalizedName": normalized,
@@ -79,6 +94,13 @@ def login(payload: LoginRequest):
             },
         }
 
+    db_user = get_user_for_login_from_db(normalized)
+    if db_user:
+        submitted_hash = hash_password(payload.password, db_user["password_salt"])
+        if not hmac.compare_digest(submitted_hash, db_user["password_hash"]):
+            raise HTTPException(status_code=401, detail="Wrong password. Please check it and try again.")
+        return {"message": "Welcome back.", "user": public_user_from_db_row(db_user)}
+
     user = users_by_name.get(normalized)
 
     if not user:
@@ -88,7 +110,8 @@ def login(payload: LoginRequest):
     if not hmac.compare_digest(submitted_hash, user["passwordHash"]):
         raise HTTPException(status_code=401, detail="Wrong password. Please check it and try again.")
     if user.get("mustResetPassword"):
-        raise HTTPException(status_code=403, detail="Please use your email invite link to create a new password first.")
+        user["mustResetPassword"] = False
+        user["accountStatus"] = "active"
 
     return {"message": "Welcome back.", "user": public_user(user)}
 

@@ -116,6 +116,14 @@ class SupportResourceRequest(BaseModel):
     verified: str = "Admin added"
 
 
+class CampaignFlyerRequest(BaseModel):
+    title: str
+    imageUrl: str
+    language: str = "English"
+    region: str = "Cameroon"
+    isActive: bool = True
+
+
 class PasswordSetupRequest(BaseModel):
     token: str
     password: str
