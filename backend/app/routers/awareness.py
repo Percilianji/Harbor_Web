@@ -21,7 +21,7 @@ def require_official(x_harbor_role: str) -> None:
 @router.get("/lessons")
 def list_lessons():
     lessons = list_awareness_lessons_from_db()
-    if lessons is None:
+    if not lessons:
         lessons = awareness_lessons
     age_groups = ["All ages", *sorted({lesson["age"] for lesson in lessons})]
     topics = ["All topics", *sorted({lesson["topic"] for lesson in lessons})]
