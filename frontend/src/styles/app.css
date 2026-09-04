@@ -462,6 +462,10 @@ textarea { resize: vertical; min-height: 120px; }
   color: #4b4650;
 }
 
+#awareness .awareness-card {
+  background: #fffefa;
+}
+
 .awareness-card {
   overflow: hidden;
   background: #fffefa;
@@ -1724,13 +1728,14 @@ textarea {
 
 .awareness-card,
 .awareness-manager {
-  background: #ffffff;
-  box-shadow: 0 14px 34px rgba(45, 42, 50, 0.07);
+  background: #fffefa;
+  border-color: rgba(123, 109, 141, 0.24);
+  box-shadow: 0 16px 38px rgba(45, 42, 50, 0.11);
 }
 
 .awareness-card p,
 .awareness-card .lesson-points {
-  color: #4d4851;
+  color: #3f3944;
 }
 
 .awareness-thumb img {
