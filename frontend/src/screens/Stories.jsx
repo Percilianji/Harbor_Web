@@ -72,6 +72,18 @@ export default function Stories({ notify, currentUser }) {
         <button className={view === "all" ? "active" : ""} type="button" onClick={() => setView("all")}>{isFrench ? "Toutes" : "All stories"}</button>
         <button className={view === "mine" ? "active" : ""} type="button" onClick={() => setView("mine")}>{isFrench ? "Mes histoires" : "My stories"}</button>
       </div>
+      <details className="mobile-filter-menu">
+        <summary><span>{isFrench ? "Filtrer" : "Filter"}</span></summary>
+        <div className="mobile-filter-panel">
+          <label><span>{isFrench ? "Langue" : "Language"}</span><select aria-label={isFrench ? "Langue" : "Language"}><option>{isFrench ? "Toutes les langues" : "Any language"}</option><option>English</option><option>French</option><option>Pidgin English</option></select></label>
+          <label><span>{isFrench ? "Sujet" : "Topic"}</span><select aria-label={isFrench ? "Sujet" : "Topic"}><option>{isFrench ? "Tous les sujets" : "Any topic"}</option><option>{isFrench ? "Soutien et guerison" : "Support and recovery"}</option><option>{isFrench ? "Experience de signalement" : "Reporting experience"}</option></select></label>
+          <label><span>{isFrench ? "Etape" : "Healing stage"}</span><select aria-label={isFrench ? "Etape" : "Healing stage"}><option>{isFrench ? "Toutes les etapes" : "Any stage"}</option><option>{isFrench ? "Trouver les mots" : "Finding words"}</option><option>{isFrench ? "Se reconstruire" : "Rebuilding"}</option></select></label>
+          <div className="mobile-filter-tabs" aria-label="Story views">
+            <button className={view === "all" ? "active" : ""} type="button" onClick={() => setView("all")}>{isFrench ? "Toutes" : "All stories"}</button>
+            <button className={view === "mine" ? "active" : ""} type="button" onClick={() => setView("mine")}>{isFrench ? "Mes histoires" : "My stories"}</button>
+          </div>
+        </div>
+      </details>
       <div className="story-grid">
         {visibleItems.map((story) => {
           const storyIndex = items.indexOf(story);

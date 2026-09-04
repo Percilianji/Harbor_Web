@@ -144,6 +144,15 @@ export default function Vault({ notify, currentUser }) {
             {statuses.map((item) => <option key={item}>{item}</option>)}
           </select>
         </div>
+        <details className="mobile-filter-menu">
+          <summary><span>Filter</span></summary>
+          <div className="mobile-filter-panel">
+            <label><span>Search</span><input type="search" value={filters.query} onChange={(event) => setFilters({ ...filters, query: event.target.value })} placeholder="Search messages" aria-label="Search vault messages" /></label>
+            <label><span>Region</span><select value={filters.region} onChange={(event) => setFilters({ ...filters, region: event.target.value })} aria-label="Filter by region">{regions.map((item) => <option key={item}>{item}</option>)}</select></label>
+            <label><span>Record type</span><select value={filters.type} onChange={(event) => setFilters({ ...filters, type: event.target.value })} aria-label="Filter by record type">{types.map((item) => <option key={item}>{item}</option>)}</select></label>
+            <label><span>Status</span><select value={filters.status} onChange={(event) => setFilters({ ...filters, status: event.target.value })} aria-label="Filter by status">{statuses.map((item) => <option key={item}>{item}</option>)}</select></label>
+          </div>
+        </details>
 
         <div className="official-vault-list">
           {filteredOfficialCases.map((item) => (

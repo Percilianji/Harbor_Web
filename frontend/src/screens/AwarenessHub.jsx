@@ -530,6 +530,33 @@ export default function AwarenessHub({ notify, currentUser }) {
           <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={isFrench ? "Chercher le contenu" : "Search awareness content"} />
         </label>
       </div>
+      <details className="mobile-filter-menu">
+        <summary><span>{isFrench ? "Filtrer" : "Filter"}</span></summary>
+        <div className="mobile-filter-panel">
+          <label>
+            <span>{isFrench ? "Type" : "Content type"}</span>
+            <select value={contentType} onChange={(event) => setContentType(event.target.value)}>
+              {visibleContentTypes.map((item) => <option key={item}>{item}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>{isFrench ? "Age" : "Age group"}</span>
+            <select value={age} onChange={(event) => setAge(event.target.value)}>
+              {availableAgeGroups.map((item) => <option key={item}>{item}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>{isFrench ? "Sujet" : "Topic"}</span>
+            <select value={topic} onChange={(event) => setTopic(event.target.value)}>
+              {availableTopics.map((item) => <option key={item}>{item}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>{isFrench ? "Recherche" : "Search"}</span>
+            <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={isFrench ? "Chercher" : "Search"} />
+          </label>
+        </div>
+      </details>
 
       <div className="support-grid awareness-grid" aria-live="polite">
         {visibleLessons.map((lesson) => {

@@ -136,6 +136,12 @@ export default function Support({ notify, currentUser }) {
       <div className="resource-filters">
         <label><span className="sr-only">{isFrench ? "Pays, ville ou service" : "Country, city, or service"}</span><input aria-label={isFrench ? "Chercher pays, ville ou service" : "Search country, city, or service"} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={isFrench ? "Chercher pays, ville ou service" : "Search country, city, or service"} /></label>
       </div>
+      <details className="mobile-filter-menu">
+        <summary><span>{isFrench ? "Filtrer" : "Filter"}</span></summary>
+        <div className="mobile-filter-panel">
+          <label><span>{isFrench ? "Pays, ville ou service" : "Country, city, or service"}</span><input aria-label={isFrench ? "Chercher pays, ville ou service" : "Search country, city, or service"} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={isFrench ? "Chercher" : "Search"} /></label>
+        </div>
+      </details>
       {isAdmin && (
         <form className="support-admin-form" onSubmit={addSupportContact}>
           <div className="section-title-row">
