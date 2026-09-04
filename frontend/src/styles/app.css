@@ -444,10 +444,7 @@ textarea { resize: vertical; min-height: 120px; }
 .detail-grid strong { color: var(--primary-strong); }
 .detail-grid span { color: var(--muted); }
 .support-card button { border: 0; background: transparent; color: var(--primary-strong); font-weight: 650; text-decoration: underline; }
-#awareness {
-  background: #e6efe4;
-  border-block-color: rgba(104, 128, 101, 0.3);
-}
+#awareness { margin-top: -3rem; }
 
 #awareness .section-heading h2,
 #awareness .section-heading p,
