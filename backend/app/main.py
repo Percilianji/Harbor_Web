@@ -10,10 +10,28 @@ load_dotenv()
 
 app = FastAPI(title="Harbor API", version="0.1.0")
 
-frontend_origin = os.getenv("FRONTEND_ORIGIN", "http://127.0.0.1:5173")
+
+def get_cors_origins() -> list[str]:
+    configured_origins = [
+        origin.strip().rstrip("/")
+        for origin in os.getenv("FRONTEND_ORIGINS", "").split(",")
+        if origin.strip()
+    ]
+    primary_origin = os.getenv("FRONTEND_ORIGIN", "").strip().rstrip("/")
+    origins = [
+        primary_origin or "http://127.0.0.1:5173",
+        *configured_origins,
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://herharborsupport.com",
+        "https://www.herharborsupport.com",
+    ]
+    return list(dict.fromkeys(origin for origin in origins if origin))
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_origin, "http://localhost:5173"],
+    allow_origins=get_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
