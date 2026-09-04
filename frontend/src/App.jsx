@@ -100,7 +100,7 @@ export default function App() {
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targets = document.querySelectorAll(
-      ".app-section, .trust-band, .carousel-section, .photo-strip, .feature-card, .story-card, .support-card, .journal-entry, .vault-panel"
+      ".app-section:not(#awareness), .trust-band, .carousel-section, .photo-strip, .feature-card, .story-card, .support-card:not(.awareness-card), .journal-entry, .vault-panel"
     );
 
     if (reduceMotion || !("IntersectionObserver" in window)) {
